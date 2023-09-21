@@ -12,7 +12,6 @@
         font-weight: bold;
     }
 
-    /* Estilos CSS para las clases de barcos */
     .fragata {background: red; color: white;}
     .submarino {background: blue; color: white;}
     .destructor {background: green; color: white;}
@@ -24,10 +23,9 @@
 
     <table>
         <?php
-        $N = 7; // Tamaño del tablero
-        $barcos = []; // para almacenar información de los barcos
+        $N = 7; 
+        $barcos = []; 
 
-        // Función para verificar si una celda está ocupada por un barco
         function esBarco($fila, $columna, $barcos) {
             foreach ($barcos as $barco) {
                 if (in_array([$fila, $columna], $barco)) return true;
@@ -35,7 +33,6 @@
             return false;
         }
 
-        // Función para generar un barco en el tablero
         function generarBarco($longitud, &$barcos) {
             global $N;
             do {
@@ -51,31 +48,29 @@
             $barcos[] = $barco;
         }
 
-        generarBarco(4, $barcos); // Generar un portaaviones
-        for ($i = 0; $i < 2; $i++) generarBarco(3, $barcos); // Generar destructores
-        for ($i = 0; $i < 3; $i++) generarBarco(2, $barcos); // Generar submarinos
-        for ($i = 0; $i < 4; $i++) generarBarco(1, $barcos); // Generar fragatas
+        generarBarco(4, $barcos); // Generar un portaavi
+        for ($i = 0; $i < 2; $i++) generarBarco(3, $barcos); // Generar destructors
+        for ($i = 0; $i < 3; $i++) generarBarco(2, $barcos); // Generar submarins
+        for ($i = 0; $i < 4; $i++) generarBarco(1, $barcos); // Generar fragata
 
-        // Bucle para crear el tablero HTML
         for ($fila = 0; $fila <= $N; $fila++) {
-            echo '<tr>'; // Crear una fila en la tabla HTML
+            echo '<tr>'; 
             for ($columna = 0; $columna <= $N; $columna++) {
-                if ($fila == 0 && $columna == 0) echo '<td></td>'; // Celda vacía en la esquina superior izquierda
-                elseif ($fila == 0) echo '<td>' . $columna . '</td>'; // Números en la primera fila
-                elseif ($columna == 0) echo '<td>' . chr($fila + 64) . '</td>'; // Letras en la primera columna
+                if ($fila == 0 && $columna == 0) echo '<td></td>'; 
+                elseif ($fila == 0) echo '<td>' . $columna . '</td>'; 
+                elseif ($columna == 0) echo '<td>' . chr($fila + 64) . '</td>'; 
                 else {
-                    $tipoBarco = ''; // Variable para almacenar el tipo de barco en la celda
+                    $tipoBarco = ''; 
                     foreach ($barcos as $barco) {
                         if (in_array([$fila, $columna], $barco)) {
                             $longitud = count($barco);
                             $tipoBarco = ($longitud == 4) ? 'portaaviones' : (($longitud == 3) ? 'destructor' : (($longitud == 2) ? 'submarino' : 'fragata'));
                         }
                     }
-                    // Crear celda con la clase de estilo del barco y la letra "X" si está ocupada
                     echo '<td class="' . $tipoBarco . '">' . (($tipoBarco != '') ? 'X' : '') . '</td>';
                 }
             }
-            echo '</tr>'; // Cerrar la fila de la tabla HTML
+            echo '</tr>'; 
         }
         ?>
     </table>
